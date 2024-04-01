@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Exceptions
 {
-    public class ErrorExceptions : Exception
+    public class UnauthorizedException : Exception
     {
-        public string Error { get; private set; }
-
-        public ErrorExceptions(string error) 
+        public UnauthorizedException() :base("Unauthorized")
         {
-            Error = error;
+                
         }
-
     }
 }
