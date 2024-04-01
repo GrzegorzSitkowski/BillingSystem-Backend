@@ -1,5 +1,6 @@
 using BillingSystem.Application.Logic.Abstractions;
 using BillingSystem.Infrastructure.Persistence;
+using BillingSystem.WebApi.Middlewares;
 using Serilog;
 
 namespace BillingSystem.WebApi
@@ -42,6 +43,8 @@ namespace BillingSystem.WebApi
             });
 
             var app = builder.Build();
+
+            app.UseExceptionResultMiddleware();
 
             // Configure the HTTP request pipeline.
 
