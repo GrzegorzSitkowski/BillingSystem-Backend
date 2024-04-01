@@ -2,6 +2,6 @@
 {
     public class UnauthorizedResponse
     {
-        public string? Resaon { get; set; }
+        public string? Reason { get; set; }
     }
 }

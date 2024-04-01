@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Exceptions
 {
-    public class ErrorExceptions : Exception
+    public class ErrorException : Exception
     {
         public string Error { get; private set; }
 
-        public ErrorExceptions(string error) 
+        public ErrorException(string error) 
         {
             Error = error;
         }
