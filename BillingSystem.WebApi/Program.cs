@@ -1,3 +1,4 @@
+using BillingSystem.Infrastructure.Persistence;
 using Serilog;
 
 namespace BillingSystem.WebApi
@@ -26,6 +27,7 @@ namespace BillingSystem.WebApi
 
             // Add services to the container.
 
+            builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
             builder.Services.AddControllers();
 
             var app = builder.Build();
