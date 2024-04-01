@@ -20,6 +20,11 @@ namespace BillingSystem.Infrastructure.Persistence
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountUser> AccountUsers { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)//automatycznie implementuje konfiguracje dla DbSets
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainDbContext).Assembly);
+        }
+
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)//metoda ustawiająca globalne ustawienia dla property
         {
             configurationBuilder.Properties<decimal>().HavePrecision(18, 4);
