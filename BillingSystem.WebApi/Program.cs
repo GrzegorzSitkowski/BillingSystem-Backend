@@ -1,3 +1,4 @@
+using BillingSystem.Application.Logic.Abstractions;
 using BillingSystem.Infrastructure.Persistence;
 using Serilog;
 
@@ -34,6 +35,11 @@ namespace BillingSystem.WebApi
 
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
             builder.Services.AddControllers();
+
+            builder.Services.AddMediatR(c =>
+            {
+                c.RegisterServicesFromAssemblyContaining(typeof(BaseCommandHandler));
+            });
 
             var app = builder.Build();
 
