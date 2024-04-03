@@ -2,6 +2,7 @@ using BillingSystem.Application.Logic.Abstractions;
 using BillingSystem.Infrastructure.Persistence;
 using BillingSystem.WebApi.Middlewares;
 using Serilog;
+using BillingSystem.Application;
 
 namespace BillingSystem.WebApi
 {
@@ -41,6 +42,8 @@ namespace BillingSystem.WebApi
             {
                 c.RegisterServicesFromAssemblyContaining(typeof(BaseCommandHandler));
             });
+
+            builder.Services.AddApplicationServices();
 
             var app = builder.Build();
 
