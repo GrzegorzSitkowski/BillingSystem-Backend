@@ -1,6 +1,7 @@
 ﻿using BillingSystem.Application.Exceptions;
 using BillingSystem.Application.Interfaces;
 using BillingSystem.Domain.Entities;
+using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace BillingSystem.Application.Services
                     .Where(au => au.UserId == userId.Value)
                     .OrderBy(au => au.Id)
                     .Select(au => (int?)au.AccountId)
+                    .Cacheable()
                     .FirstOrDefaultAsync();
             }
 
@@ -44,7 +46,7 @@ namespace BillingSystem.Application.Services
                 throw new UnauthorizedException();
             }
 
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.Value);
+            var account = await _applicationDbContext.Accounts.Cacheable().FirstOrDefaultAsync(a => a.Id == accountId.Value);
             if(account == null)
             {
                 throw new ErrorException("AccountDoesNotExist");
