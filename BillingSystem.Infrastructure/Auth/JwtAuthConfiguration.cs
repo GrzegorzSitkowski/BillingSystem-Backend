@@ -17,6 +17,7 @@ namespace BillingSystem.Infrastructure.Persistence
         public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration configuration) 
         {
             services.Configure<JwtAuthenticationOptions>(configuration.GetSection("JwtAuthentication"));
+            services.AddSingleton<JwtManager>();
 
             return services;
         }
