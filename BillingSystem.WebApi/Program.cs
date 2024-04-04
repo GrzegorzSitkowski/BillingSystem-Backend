@@ -4,6 +4,7 @@ using BillingSystem.WebApi.Middlewares;
 using Serilog;
 using BillingSystem.Application;
 using BillingSystem.WebApi.Application.Auth;
+using BillingSystem.Infrastructure.Auth;
 
 namespace BillingSystem.WebApi
 {
