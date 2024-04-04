@@ -3,6 +3,8 @@ using BillingSystem.Infrastructure.Persistence;
 using BillingSystem.WebApi.Middlewares;
 using Serilog;
 using BillingSystem.Application;
+using BillingSystem.WebApi.Application.Auth;
+using BillingSystem.Infrastructure.Auth;
 
 namespace BillingSystem.WebApi
 {
@@ -34,9 +36,12 @@ namespace BillingSystem.WebApi
                 .Enrich.FromLogContext());
 
             // Add services to the container.
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddDatabaseCache();
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
             builder.Services.AddControllers();
+            builder.Services.AddJwtAuth(builder.Configuration);
+            builder.Services.AddJwtAuthenticationDataProvider(builder.Configuration);
 
             builder.Services.AddMediatR(c =>
             {
