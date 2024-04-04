@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Infrastructure.Persistence
+namespace BillingSystem.Infrastructure.Auth
 {
     public static class JwtAuthConfiguration
     {
