@@ -1,4 +1,5 @@
 ﻿using BillingSystem.Application.Interfaces;
+using BillingSystem.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BillingSystem.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<ICurrentAccountProvider, ICurrentAccountProvider>();
+            services.AddScoped<ICurrentAccountProvider, CurrentAccountProvider>();
 
             return services;
         } 
