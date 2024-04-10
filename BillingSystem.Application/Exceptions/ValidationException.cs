@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Exceptions
 {
-    public class ValidationException
+    public class ValidationException : Exception
     {
         public List<FieldError> Errors { get; set; } = new List<FieldError>();
 
