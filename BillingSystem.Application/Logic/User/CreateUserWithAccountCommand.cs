@@ -2,6 +2,7 @@
 using BillingSystem.Application.Interfaces;
 using BillingSystem.Application.Logic.Abstractions;
 using BillingSystem.Domain.Entities;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -76,6 +77,19 @@ namespace BillingSystem.Application.Logic.User
                 {
                     UserId = user.Id,
                 };
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator() 
+            {
+                RuleFor(x => x.Email).NotEmpty();
+                RuleFor(x => x.Email).EmailAddress();
+                RuleFor(x => x.Email).MaximumLength(100);
+
+                RuleFor(x => x.Password).NotEmpty();
+                RuleFor(x => x.Password).MaximumLength(50);
             }
         }
     }
