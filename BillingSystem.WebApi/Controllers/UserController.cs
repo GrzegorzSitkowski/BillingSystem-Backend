@@ -48,7 +48,7 @@ namespace BillingSystem.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Logout()
         {
-            var logoutResult = await _mediator.Send(new LogoutCommand.Request());
+            var logoutResult = await _mediator.Send(new LoggedInUserQuery.Request());
             DeleteTokenCookie();
             return Ok(logoutResult);
         }
