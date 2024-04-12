@@ -55,7 +55,7 @@ namespace BillingSystem.Application.Logic.User
 
                 _applicationDbContext.Users.Add(user);
 
-                var account = new Account()
+                var account = new Domain.Entities.Account()
                 {
                     Name = request.Email,
                     CreateDate = utcNow,
