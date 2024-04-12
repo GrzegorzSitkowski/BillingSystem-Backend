@@ -4,6 +4,7 @@ using BillingSystem.Infrastructure.Auth;
 using BillingSystem.WebApi.Application.Auth;
 using BillingSystem.WebApi.Application.Response;
 using MediatR;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -44,6 +45,14 @@ namespace BillingSystem.WebApi.Controllers
             return Ok(new JwtToken() { AccessToken = token });
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Logout()
+        {
+            var logoutResult = await _mediator.Send(new LogoutCommand.Request());
+            DeleteTokenCookie();
+            return Ok(logoutResult);
+        }
+
         private void SetTokenCookie(string token)
         {
             var cookieOption = new CookieOptions()
@@ -66,6 +75,14 @@ namespace BillingSystem.WebApi.Controllers
             }
 
             Response.Cookies.Append(CookieSettings.CookieName, token, cookieOption);
+        }
+
+        private void DeleteTokenCookie()
+        {
+            Response.Cookies.Delete(CookieSettings.CookieName, new CookieOptions()
+            {
+                HttpOnly = true,
+            });
         }
     }
 }
