@@ -1,6 +1,8 @@
-﻿using BillingSystem.Application.Logic.User;
+﻿using Azure.Core;
+using BillingSystem.Application.Logic.User;
 using BillingSystem.Infrastructure.Auth;
 using BillingSystem.WebApi.Application.Auth;
+using BillingSystem.WebApi.Application.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +30,18 @@ namespace BillingSystem.WebApi.Controllers
         public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateUserWithAccountCommand.Request model)
         {
             var createAccountResult = await _mediator.Send(model);
-            return Ok(createAccountResult);
+            var token = _jwtManager.GenerateUserToken(createAccountResult.UserId);
+            SetTokenCookie(token);
+            return Ok(new JwtToken() { AccessToken = token});
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login([FromBody] LoginCommand.Request model)
+        {
+            var loginResult = await _mediator.Send(model);
+            var token = _jwtManager.GenerateUserToken(loginResult.UserId);
+            SetTokenCookie(token);
+            return Ok(new JwtToken() { AccessToken = token });
         }
 
         private void SetTokenCookie(string token)
