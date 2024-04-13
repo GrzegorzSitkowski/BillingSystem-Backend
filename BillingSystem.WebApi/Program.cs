@@ -6,6 +6,7 @@ using BillingSystem.Application;
 using BillingSystem.WebApi.Application.Auth;
 using BillingSystem.Infrastructure.Auth;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 namespace BillingSystem.WebApi
 {
@@ -47,7 +48,8 @@ namespace BillingSystem.WebApi
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 }
-            });
+            }).AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             builder.Services.AddJwtAuth(builder.Configuration);
             builder.Services.AddJwtAuthenticationDataProvider(builder.Configuration);
