@@ -4,6 +4,7 @@ using BillingSystem.Infrastructure.Auth;
 using BillingSystem.WebApi.Application.Auth;
 using BillingSystem.WebApi.Application.Response;
 using MediatR;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +18,21 @@ namespace BillingSystem.WebApi.Controllers
     {
         private readonly CookieSettings? _cookieSettings;
         private readonly JwtManager _jwtManager;
+        private readonly IAntiforgery _antiforgery;
 
         public UserController(ILogger<UserController> logger,
             IOptions<CookieSettings> cookieSettings,
+            IAntiforgery antiforgery,
             JwtManager jwtManager,
             IMediator mediator) : base(logger, mediator)
         {
             _cookieSettings = cookieSettings != null ? cookieSettings.Value : null;
             _jwtManager = jwtManager;
+            _antiforgery = antiforgery;
         }
 
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateUserWithAccountCommand.Request model)
         {
             var createAccountResult = await _mediator.Send(model);
@@ -58,6 +63,13 @@ namespace BillingSystem.WebApi.Controllers
         {
             var data = await _mediator.Send(new CurrentAccountQuery.Request() { });
             return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> AntiforgeryToken()
+        {
+            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+            return Ok(tokens.RequestToken);
         }
 
         private void SetTokenCookie(string token)

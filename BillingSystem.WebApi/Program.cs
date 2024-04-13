@@ -5,6 +5,7 @@ using Serilog;
 using BillingSystem.Application;
 using BillingSystem.WebApi.Application.Auth;
 using BillingSystem.Infrastructure.Auth;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BillingSystem.WebApi
 {
@@ -39,7 +40,15 @@ namespace BillingSystem.WebApi
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDatabaseCache();
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
-            builder.Services.AddControllers();
+
+            builder.Services.AddControllersWithViews(options =>
+            {
+                if (!builder.Environment.IsDevelopment())
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                }
+            });
+
             builder.Services.AddJwtAuth(builder.Configuration);
             builder.Services.AddJwtAuthenticationDataProvider(builder.Configuration);
             builder.Services.AddPasswordManager();
@@ -63,6 +72,11 @@ namespace BillingSystem.WebApi
                     }
                     return name;
                 });
+            });
+
+            builder.Services.AddAntiforgery(o =>
+            {
+                o.HeaderName = "X-XSRF-TOKEN";
             });
 
             builder.Services.AddCors();
