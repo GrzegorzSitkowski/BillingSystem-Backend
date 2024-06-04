@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Domain.Entities
 {
-    public class Customers : DomainEntity
+    public class Customer : DomainEntity
     {
         public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
         public string FullName { get; set; }
@@ -15,6 +15,6 @@ namespace BillingSystem.Domain.Entities
         public string Email { get; set; }
         public float PayRate { get; set; }
         public float Balance { get; set; }
-        //public List<Invoice> Invoices { get; set; }
+        public List<Invoice> Invoices { get; set; }
     }
 }
