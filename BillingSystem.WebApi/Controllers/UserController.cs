@@ -33,7 +33,7 @@ namespace BillingSystem.WebApi.Controllers
 
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateUserWithAccountCommand.Request model)
+        public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateOrUpdateCustomerCommand.Request model)
         {
             var createAccountResult = await _mediator.Send(model);
             var token = _jwtManager.GenerateUserToken(createAccountResult.UserId);
