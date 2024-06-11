@@ -1,8 +1,4 @@
-﻿using Azure.Core;
-using BillingSystem.Application.Logic.User;
-using BillingSystem.Infrastructure.Auth;
-using BillingSystem.WebApi.Application.Auth;
-using BillingSystem.WebApi.Application.Response;
+﻿using BillingSystem.Application.Logic.Customer;
 using MediatR;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +15,13 @@ namespace BillingSystem.WebApi.Controllers
             IMediator mediator) : base(logger, mediator)
         {
 
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateOrUpdate([FromBody] CreateOrUpdateCustomerCommand.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
         }
     }
 }

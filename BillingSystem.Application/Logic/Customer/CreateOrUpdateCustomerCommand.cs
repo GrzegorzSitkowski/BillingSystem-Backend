@@ -18,14 +18,14 @@ namespace BillingSystem.Application.Logic.Customer
         public class Request : IRequest<Result>
         {
             public int? Id { get; set; }
-            public string FullName { get; set; }
+            public required string FullName { get; set; }
             public string PhoneNumber { get; set; }
-            public string Addres { get; set; }
+            public string Address { get; set; }
             public string PostCode { get; set; }
             public string City { get; set; }
             public string Email { get; set; }
-            public float PayRate { get; set; }
-            public float Balance { get; set; }
+            public double PayRate { get; set; }
+            public double Balance { get; set; }
         }
 
         public class Result
@@ -66,7 +66,7 @@ namespace BillingSystem.Application.Logic.Customer
 
                 model.FullName = request.FullName;
                 model.PhoneNumber = request.PhoneNumber;
-                model.Addres = request.Addres;
+                model.Address = request.Address;
                 model.PostCode = request.PostCode;
                 model.City = request.City;
                 model.Email = request.Email;
