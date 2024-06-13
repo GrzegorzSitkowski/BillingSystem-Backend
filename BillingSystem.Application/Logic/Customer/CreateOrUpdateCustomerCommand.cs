@@ -81,5 +81,21 @@ namespace BillingSystem.Application.Logic.Customer
                 };
             }
         }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.FullName).NotEmpty();
+                RuleFor(x => x.FullName).MaximumLength(100);
+                RuleFor(x => x.PhoneNumber).MaximumLength(50);
+                RuleFor(x => x.Address).MaximumLength(100);
+                RuleFor(x => x.PostCode).MaximumLength(50);
+                RuleFor(x => x.City).MaximumLength(100);
+                RuleFor(x => x.Email).MaximumLength(100);
+                RuleFor(x => x.PayRate).NotEmpty();
+                RuleFor(x => x.Balance).NotEmpty();
+            }
+        }
     }
 }
