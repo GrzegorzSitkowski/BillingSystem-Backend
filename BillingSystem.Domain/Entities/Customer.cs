@@ -10,7 +10,7 @@ namespace BillingSystem.Domain.Entities
     public class Customer : DomainEntity
     {
         public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
-        public string CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }

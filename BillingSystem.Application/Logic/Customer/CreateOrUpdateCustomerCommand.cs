@@ -47,13 +47,13 @@ namespace BillingSystem.Application.Logic.Customer
                 Domain.Entities.Customer? model = null;
                 if (request.Id.HasValue)
                 {
-                    model = await _applicationDbContext.Customers.FirstOrDefaultAsync(u => u.Id == request.Id);
+                    model = await _applicationDbContext.Customers.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
                 }
                 else
                 {
                     model = new Domain.Entities.Customer()
                     {
-                        
+                        CreatedBy = account.Id
                     };
 
                     _applicationDbContext.Customers.Add(model);
