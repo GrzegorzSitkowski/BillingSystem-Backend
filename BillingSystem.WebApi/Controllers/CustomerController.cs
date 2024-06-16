@@ -30,5 +30,12 @@ namespace BillingSystem.WebApi.Controllers
             var data = await _mediator.Send(model);
             return Ok(data);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetCustomer([FromQuery] GetQuery.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
+        }
     }
 }
