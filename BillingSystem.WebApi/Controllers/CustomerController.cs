@@ -23,5 +23,12 @@ namespace BillingSystem.WebApi.Controllers
             var data = await _mediator.Send(model);
             return Ok(data);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete([FromBody] DeleteCommand.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
+        }
     }
 }
