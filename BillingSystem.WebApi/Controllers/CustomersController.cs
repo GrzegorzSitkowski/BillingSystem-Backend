@@ -9,9 +9,9 @@ namespace BillingSystem.WebApi.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CustomerController : BaseController
+    public class CustomersController : BaseController
     {
-        public CustomerController(ILogger<CustomerController> logger,
+        public CustomersController(ILogger<CustomersController> logger,
             IMediator mediator) : base(logger, mediator)
         {
 
