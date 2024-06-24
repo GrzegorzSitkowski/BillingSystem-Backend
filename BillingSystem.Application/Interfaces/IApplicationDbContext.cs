@@ -13,6 +13,7 @@ namespace BillingSystem.Application.Interfaces
         DbSet<User> Users { get; set; }
         DbSet<Account> Accounts { get; set; }
         DbSet<AccountUser> AccountUsers { get; set; }
+        DbSet<Customer> Customers { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

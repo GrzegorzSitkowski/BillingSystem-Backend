@@ -14,13 +14,13 @@ namespace BillingSystem.WebApi.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class UserController : BaseController
+    public class UsersController : BaseController
     {
         private readonly CookieSettings? _cookieSettings;
         private readonly JwtManager _jwtManager;
         private readonly IAntiforgery _antiforgery;
 
-        public UserController(ILogger<UserController> logger,
+        public UsersController(ILogger<UsersController> logger,
             IOptions<CookieSettings> cookieSettings,
             IAntiforgery antiforgery,
             JwtManager jwtManager,
@@ -33,7 +33,7 @@ namespace BillingSystem.WebApi.Controllers
 
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateUserWithAccountCommand.Request model)
+        public async Task<ActionResult> CreateUserWithAccount([FromBody] CreateOrUpdateCustomerCommand.Request model)
         {
             var createAccountResult = await _mediator.Send(model);
             var token = _jwtManager.GenerateUserToken(createAccountResult.UserId);

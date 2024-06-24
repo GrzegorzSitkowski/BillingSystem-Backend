@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.User
 {
-    public static class CreateUserWithAccountCommand
+    public static class CreateOrUpdateCustomerCommand
     {
         public class Request : IRequest<Result>
         {
