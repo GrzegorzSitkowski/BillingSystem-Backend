@@ -1,0 +1,13 @@
+﻿CREATE TABLE [dbo].[Reading]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Lessons] FLOAT NOT NULL,
+	[Price] INT NOT NULL,
+	[Period] VARCHAR(30) NOT NULL,
+	[CustomerId] INT NOT NULL,
+	[CustomerName] VARCHAR(50) NOT NULL,
+	[Invoiced] VARCHAR(20) NOT NULL,
+	[CreatedBy] INT NOT NULL,
+	[CreateDate] DATETIMEOFFSET NOT NULL,
+	CONSTRAINT [PK_Reading] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
