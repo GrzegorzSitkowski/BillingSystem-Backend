@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Customer
+namespace BillingSystem.Application.Logic.Customers
 {
     public static class ListQuery
     {
