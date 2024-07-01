@@ -11,21 +11,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Customers
+namespace BillingSystem.Application.Logic.Readings
 {
     public static class CreateOrUpdateCommand
     {
         public class Request : IRequest<Result>
         {
             public int? Id { get; set; }
-            public required string FullName { get; set; }
-            public string PhoneNumber { get; set; }
-            public string Address { get; set; }
-            public string PostCode { get; set; }
-            public string City { get; set; }
-            public string Email { get; set; }
-            public double PayRate { get; set; }
-            public double Balance { get; set; }
+            public double Lessons { get; set; }
+            public int Price { get; set; }
+            public string Period { get; set; }
+            public int CustomerId { get; set; }
         }
 
         public class Result
@@ -44,19 +40,22 @@ namespace BillingSystem.Application.Logic.Customers
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                Domain.Entities.Customer? model = null;
+                Domain.Entities.Reading? model = null;
                 if (request.Id.HasValue)
                 {
-                    model = await _applicationDbContext.Customers.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
+                    model = await _applicationDbContext.Readings.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
                 }
                 else
                 {
-                    model = new Domain.Entities.Customer()
+                    var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
+                    model = new Domain.Entities.Reading()
                     {
-                        CreatedBy = account.Id
+                        CreatedBy = account.Id,
+                        CustomerName = customer.FullName,
+                        Invoiced = false
                     };
 
-                    _applicationDbContext.Customers.Add(model);
+                    _applicationDbContext.Readings.Add(model);
                 }
 
                 if (model == null)
@@ -64,14 +63,10 @@ namespace BillingSystem.Application.Logic.Customers
                     throw new UnauthorizedException();
                 }
 
-                model.FullName = request.FullName;
-                model.PhoneNumber = request.PhoneNumber;
-                model.Address = request.Address;
-                model.PostCode = request.PostCode;
-                model.City = request.City;
-                model.Email = request.Email;
-                model.PayRate = request.PayRate;
-                model.Balance = request.Balance;
+                model.Lessons = request.Lessons;
+                model.Price = request.Price;
+                model.Period = request.Period;
+                model.CustomerId = request.CustomerId;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
@@ -86,15 +81,10 @@ namespace BillingSystem.Application.Logic.Customers
         {
             public Validator()
             {
-                RuleFor(x => x.FullName).NotEmpty();
-                RuleFor(x => x.FullName).MaximumLength(100);
-                RuleFor(x => x.PhoneNumber).MaximumLength(50);
-                RuleFor(x => x.Address).MaximumLength(100);
-                RuleFor(x => x.PostCode).MaximumLength(50);
-                RuleFor(x => x.City).MaximumLength(100);
-                RuleFor(x => x.Email).MaximumLength(100);
-                RuleFor(x => x.PayRate).NotEmpty();
-                RuleFor(x => x.Balance).NotEmpty();
+                RuleFor(x => x.Lessons).NotEmpty();
+                RuleFor(x => x.Price).NotEmpty();
+                RuleFor(x => x.Period).NotEmpty().MaximumLength(30);
+                RuleFor(x => x.CustomerId).NotEmpty();
             }
         }
     }
