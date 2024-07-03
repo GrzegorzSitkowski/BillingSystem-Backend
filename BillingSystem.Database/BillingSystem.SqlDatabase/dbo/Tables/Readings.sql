@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Reading]
+﻿CREATE TABLE [dbo].[Readings]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[Lessons] FLOAT NOT NULL,
@@ -9,5 +9,5 @@
 	[Invoiced] VARCHAR(20) NOT NULL,
 	[CreatedBy] INT NOT NULL,
 	[CreateDate] DATETIMEOFFSET NOT NULL,
-	CONSTRAINT [PK_Reading] PRIMARY KEY CLUSTERED ([Id] ASC)
+	CONSTRAINT [PK_Readings] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
