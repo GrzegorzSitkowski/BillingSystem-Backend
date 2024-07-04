@@ -30,7 +30,7 @@ namespace BillingSystem.Application.Logic.Readings
                 public int Price { get; set; }
                 public string Period { get; set; }
                 public string CustomerName { get; set; }
-                public bool Invoiced { get; set; }
+                public int Invoiced { get; set; }
             }           
         }
 

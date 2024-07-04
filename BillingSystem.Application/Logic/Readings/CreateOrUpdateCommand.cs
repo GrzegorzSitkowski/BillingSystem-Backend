@@ -52,7 +52,7 @@ namespace BillingSystem.Application.Logic.Readings
                     {
                         CreatedBy = account.Id,
                         CustomerName = customer.FullName,
-                        Invoiced = false
+                        Invoiced = 0
                     };
 
                     _applicationDbContext.Readings.Add(model);

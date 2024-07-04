@@ -27,7 +27,7 @@ namespace BillingSystem.Application.Logic.Readings
             public string Period { get; set; }
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
-            public bool Invoiced { get; set; }
+            public int Invoiced { get; set; }
             public int CreatedBy { get; set; }
             public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
         }
