@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Customers
+namespace BillingSystem.Application.Logic.Readings
 {
     public static class DeleteCommand
     {
@@ -35,14 +35,14 @@ namespace BillingSystem.Application.Logic.Customers
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var model = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+                var model = await _applicationDbContext.Readings.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
 
                 if(model == null)
                 {
                     throw new UnauthorizedException();
                 }
 
-                _applicationDbContext.Customers.Remove(model);
+                _applicationDbContext.Readings.Remove(model);
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Customers
+namespace BillingSystem.Application.Logic.Readings
 {
     public static class ListQuery
     {
@@ -21,16 +21,16 @@ namespace BillingSystem.Application.Logic.Customers
 
         public class Result
         {
-            public List<Customer> Customers { get; set; } = new List<Customer>();
+            public List<Reading> Readings { get; set; } = new List<Reading>();
 
-            public class Customer
+            public class Reading
             {
                 public required int Id { get; set; }
-                public string FullName { get; set; }
-                public string City { get; set; }
-                public string Email { get; set; }
-                public double PayRate { get; set; }
-                public double Balance { get; set; }
+                public double Lessons { get; set; }
+                public int Price { get; set; }
+                public string Period { get; set; }
+                public string CustomerName { get; set; }
+                public int Invoiced { get; set; }
             }           
         }
 
@@ -45,22 +45,22 @@ namespace BillingSystem.Application.Logic.Customers
             {
                 var accout = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var data = await _applicationDbContext.Customers.Where(c => c.CreatedBy == accout.Id)
+                var data = await _applicationDbContext.Readings.Where(c => c.CreatedBy == accout.Id)
                     .OrderByDescending(c => c.CreateDate)
-                    .Select(c => new Result.Customer()
+                    .Select(c => new Result.Reading()
                     {
                         Id = c.Id,
-                        FullName = c.FullName,
-                        City = c.City,
-                        Email = c.Email,
-                        PayRate = c.PayRate,
-                        Balance = c.Balance
+                        Lessons = c.Lessons,
+                        Price = c.Price,
+                        Period = c.Period,
+                        CustomerName = c.CustomerName,
+                        Invoiced = c.Invoiced
                     })
                     .ToListAsync();
 
                 return new Result()
                 {
-                    Customers = data
+                    Readings = data
                 };
             }
         }

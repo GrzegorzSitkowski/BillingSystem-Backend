@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Customers
+namespace BillingSystem.Application.Logic.Readings
 {
     public static class GetQuery
     {
@@ -22,14 +22,14 @@ namespace BillingSystem.Application.Logic.Customers
 
         public class Result
         {
-            public string FullName { get; set; }
-            public string PhoneNumber { get; set; }
-            public string Address { get; set; }
-            public string PostCode { get; set; }
-            public string City { get; set; }
-            public string Email { get; set; }
-            public double PayRate { get; set; }
-            public double Balance { get; set; }
+            public double Lessons { get; set; }
+            public int Price { get; set; }
+            public string Period { get; set; }
+            public int CustomerId { get; set; }
+            public string CustomerName { get; set; }
+            public int Invoiced { get; set; }
+            public int CreatedBy { get; set; }
+            public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -43,7 +43,7 @@ namespace BillingSystem.Application.Logic.Customers
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var model = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+                var model = await _applicationDbContext.Readings.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
 
                 if(model == null)
                 {
@@ -52,14 +52,14 @@ namespace BillingSystem.Application.Logic.Customers
 
                 return new Result()
                 {
-                    FullName = model.FullName,
-                    PhoneNumber = model.PhoneNumber,
-                    Address = model.Address,
-                    PostCode = model.PostCode,
-                    City = model.City,
-                    Email = model.Email,
-                    PayRate = model.PayRate,
-                    Balance = model.Balance
+                    Lessons = model.Lessons,
+                    Price = model.Price,
+                    Period = model.Period,
+                    CustomerId = model.CustomerId,
+                    CustomerName = model.CustomerName,
+                    Invoiced = model.Invoiced,
+                    CreatedBy = model.CreatedBy,
+                    CreateDate = model.CreateDate
                 };
             }
         }

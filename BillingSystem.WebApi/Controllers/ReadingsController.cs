@@ -1,17 +1,17 @@
-﻿using BillingSystem.Application.Logic.Customers;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using BillingSystem.Application.Logic.Readings;
 
 namespace BillingSystem.WebApi.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CustomersController : BaseController
+    public class ReadingsController : BaseController
     {
-        public CustomersController(ILogger<CustomersController> logger,
+        public ReadingsController(ILogger<ReadingsController> logger,
             IMediator mediator) : base(logger, mediator)
         {
 
@@ -32,7 +32,7 @@ namespace BillingSystem.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetCustomer([FromQuery] GetQuery.Request model)
+        public async Task<ActionResult> GetReading([FromQuery] GetQuery.Request model)
         {
             var data = await _mediator.Send(model);
             return Ok(data);
