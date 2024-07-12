@@ -18,7 +18,7 @@ namespace BillingSystem.Application.Logic.Invoices
         public class Request : IRequest<Result>
         {
             public int? Id { get; set; }
-            public float Amount { get; set; }
+            public double Amount { get; set; }
             public int CustomerId { get; set; }
             public string StatusInvoice { get; set; }
             public string StatusPayment { get; set; }

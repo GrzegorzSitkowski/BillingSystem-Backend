@@ -26,6 +26,7 @@ namespace BillingSystem.Application.Logic.Invoices
             public class Invoice
             {
                 public required int Id { get; set; }
+                public double Amount { get; set; }
                 public int CustomerId { get; set; }
                 public DateTimeOffset CreateDate { get; set; }
                 public DateTimeOffset DueDate { get; set; }
@@ -50,6 +51,7 @@ namespace BillingSystem.Application.Logic.Invoices
                     .Select(c => new Result.Invoice()
                     {
                         Id = c.Id,
+                        Amount = c.Amount,
                         CustomerId = c.CustomerId,
                         CreateDate = c.CreateDate,
                         DueDate = c.DueDate,

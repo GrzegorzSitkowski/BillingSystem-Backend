@@ -22,7 +22,7 @@ namespace BillingSystem.Application.Logic.Invoices
 
         public class Result
         {
-            public float Amount { get; set; }
+            public double Amount { get; set; }
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
             public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
