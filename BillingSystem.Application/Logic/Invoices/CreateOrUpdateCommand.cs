@@ -20,8 +20,6 @@ namespace BillingSystem.Application.Logic.Invoices
             public int? Id { get; set; }
             public double Amount { get; set; }
             public int CustomerId { get; set; }
-            public string StatusInvoice { get; set; }
-            public string StatusPayment { get; set; }
         }
 
         public class Result
@@ -66,8 +64,6 @@ namespace BillingSystem.Application.Logic.Invoices
 
                 model.Amount = request.Amount;
                 model.CustomerId = request.CustomerId;
-                model.StatusInvoice = request.StatusInvoice;
-                model.StatusPayment = request.StatusPayment;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
