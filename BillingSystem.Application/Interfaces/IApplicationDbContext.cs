@@ -15,6 +15,7 @@ namespace BillingSystem.Application.Interfaces
         DbSet<AccountUser> AccountUsers { get; set; }
         DbSet<Customer> Customers { get; set; }
         DbSet<Reading> Readings { get; set; }
+        DbSet<Invoice> Invoices { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
