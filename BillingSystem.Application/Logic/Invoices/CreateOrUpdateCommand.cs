@@ -18,7 +18,7 @@ namespace BillingSystem.Application.Logic.Invoices
         public class Request : IRequest<Result>
         {
             public int? Id { get; set; }
-            public double Amount { get; set; }
+            public int ReadingId { get; set; }
             public int CustomerId { get; set; }
         }
 
@@ -38,7 +38,7 @@ namespace BillingSystem.Application.Logic.Invoices
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                Domain.Entities.Invoice? model = null;
+                Invoice? model = null;
                 if (request.Id.HasValue)
                 {
                     model = await _applicationDbContext.Invoices.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
@@ -46,7 +46,8 @@ namespace BillingSystem.Application.Logic.Invoices
                 else
                 {
                     var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
-                    model = new Domain.Entities.Invoice()
+                    var reading = await _applicationDbContext.Readings.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
+                    model = new Invoice()
                     {
                         CreatedBy = account.Id,
                         CustomerName = customer.FullName,
@@ -62,7 +63,7 @@ namespace BillingSystem.Application.Logic.Invoices
                     throw new UnauthorizedException();
                 }
 
-                model.Amount = request.Amount;
+                model.ReadingId = request.ReadingId;
                 model.CustomerId = request.CustomerId;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);

@@ -10,6 +10,7 @@ namespace BillingSystem.Domain.Entities
     public class Invoice : DomainEntity
     {
         public double Amount { get; set; }
+        public int ReadingId { get; set; }
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
