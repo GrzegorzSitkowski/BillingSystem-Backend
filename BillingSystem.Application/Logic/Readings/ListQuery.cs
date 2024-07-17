@@ -29,6 +29,7 @@ namespace BillingSystem.Application.Logic.Readings
                 public double Lessons { get; set; }
                 public int Price { get; set; }
                 public string Period { get; set; }
+                public int CustomerId { get; set; }
                 public string CustomerName { get; set; }
                 public int Invoiced { get; set; }
             }           
@@ -54,6 +55,7 @@ namespace BillingSystem.Application.Logic.Readings
                         Price = c.Price,
                         Period = c.Period,
                         CustomerName = c.CustomerName,
+                        CustomerId = c.CustomerId,
                         Invoiced = c.Invoiced
                     })
                     .ToListAsync();
