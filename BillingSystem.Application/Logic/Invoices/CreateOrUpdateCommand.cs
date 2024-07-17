@@ -52,8 +52,11 @@ namespace BillingSystem.Application.Logic.Invoices
                         CreatedBy = account.Id,
                         CustomerName = customer.FullName,
                         StatusInvoice = "Test",
-                        StatusPayment = "Not paid"
+                        StatusPayment = "Not paid",
+                        Amount = (reading.Lessons * reading.Price) * customer.PayRate
                     };
+
+                    customer.Balance -= model.Amount;
 
                     _applicationDbContext.Invoices.Add(model);
                 }
@@ -79,7 +82,7 @@ namespace BillingSystem.Application.Logic.Invoices
         {
             public Validator()
             {
-                RuleFor(x => x.Amount).NotEmpty();
+                RuleFor(x => x.ReadingId).NotEmpty();
                 RuleFor(x => x.CustomerId).NotEmpty();
             }
         }
