@@ -2,6 +2,7 @@
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[Amount] FLOAT NOT NULL,
+	[ReadingId] INT NOT NULL,
 	[CustomerId] INT NOT NULL,
 	[CustomerName] VARCHAR (50) NOT NULL,
 	[CreateDate] DATETIMEOFFSET NOT NULL,
