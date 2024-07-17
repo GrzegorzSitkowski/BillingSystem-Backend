@@ -23,6 +23,7 @@ namespace BillingSystem.Application.Logic.Invoices
         public class Result
         {
             public double Amount { get; set; }
+            public int ReadingId { get; set; }
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
             public DateTimeOffset CreateDate { get; set; }
@@ -53,6 +54,7 @@ namespace BillingSystem.Application.Logic.Invoices
                 return new Result()
                 {
                     Amount = model.Amount,
+                    ReadingId = model.ReadingId,
                     CustomerId = model.CustomerId,
                     CustomerName = model.CustomerName,
                     CreateDate = model.CreateDate,
