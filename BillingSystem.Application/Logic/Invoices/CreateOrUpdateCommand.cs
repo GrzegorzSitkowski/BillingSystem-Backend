@@ -19,7 +19,6 @@ namespace BillingSystem.Application.Logic.Invoices
         {
             public int? Id { get; set; }
             public int ReadingId { get; set; }
-            public int CustomerId { get; set; }
         }
 
         public class Result
@@ -37,6 +36,7 @@ namespace BillingSystem.Application.Logic.Invoices
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
+                var reading = await _applicationDbContext.Readings.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
 
                 Invoice? model = null;
                 if (request.Id.HasValue)
@@ -45,11 +45,13 @@ namespace BillingSystem.Application.Logic.Invoices
                 }
                 else
                 {
-                    var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
-                    var reading = await _applicationDbContext.Readings.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
+                    
+                    var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == reading.CustomerId);
+                    
                     model = new Invoice()
                     {
                         CreatedBy = account.Id,
+                        CustomerId = customer.Id,
                         CustomerName = customer.FullName,
                         StatusInvoice = "Test",
                         StatusPayment = "Not paid",
@@ -67,7 +69,6 @@ namespace BillingSystem.Application.Logic.Invoices
                 }
 
                 model.ReadingId = request.ReadingId;
-                model.CustomerId = request.CustomerId;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
@@ -83,7 +84,6 @@ namespace BillingSystem.Application.Logic.Invoices
             public Validator()
             {
                 RuleFor(x => x.ReadingId).NotEmpty();
-                RuleFor(x => x.CustomerId).NotEmpty();
             }
         }
     }
