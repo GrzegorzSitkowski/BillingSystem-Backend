@@ -50,6 +50,7 @@ namespace BillingSystem.Application.Logic.Invoices
                     
                     model = new Invoice()
                     {
+                        ReadingId = reading.Id,
                         CreatedBy = account.Id,
                         CustomerId = customer.Id,
                         CustomerName = customer.FullName,

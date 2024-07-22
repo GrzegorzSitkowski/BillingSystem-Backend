@@ -22,6 +22,7 @@ namespace BillingSystem.Application.Logic.Readings
 
         public class Result
         {
+            public int Id { get; set; }
             public double Lessons { get; set; }
             public int Price { get; set; }
             public string Period { get; set; }
@@ -52,6 +53,7 @@ namespace BillingSystem.Application.Logic.Readings
 
                 return new Result()
                 {
+                    Id = model.Id,
                     Lessons = model.Lessons,
                     Price = model.Price,
                     Period = model.Period,
