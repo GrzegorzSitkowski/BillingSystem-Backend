@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.Invoices
 {
-    public static class CreateOrUpdateCommand
+    public static class CreateCommand
     {
         public class Request : IRequest<Result>
         {
-            public int? Id { get; set; }
+            //public int? Id { get; set; }
             public int ReadingId { get; set; }
         }
 
@@ -38,17 +38,9 @@ namespace BillingSystem.Application.Logic.Invoices
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
                 var reading = await _applicationDbContext.Readings.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
 
-                Invoice? model = null;
-                if (request.Id.HasValue)
-                {
-                    model = await _applicationDbContext.Invoices.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
-                }
-                else
-                {
+                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == reading.CustomerId);
                     
-                    var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == reading.CustomerId);
-                    
-                    model = new Invoice()
+                var model = new Invoice()
                     {
                         ReadingId = reading.Id,
                         CreatedBy = account.Id,
@@ -59,10 +51,9 @@ namespace BillingSystem.Application.Logic.Invoices
                         Amount = (reading.Lessons * reading.Price) * customer.PayRate
                     };
 
-                    customer.Balance -= model.Amount;
+                customer.Balance -= model.Amount;
 
-                    _applicationDbContext.Invoices.Add(model);
-                }
+                _applicationDbContext.Invoices.Add(model);
 
                 if (model == null)
                 {
