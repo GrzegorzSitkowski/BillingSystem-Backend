@@ -62,6 +62,8 @@ namespace BillingSystem.Application.Logic.Invoices
 
                 model.ReadingId = request.ReadingId;
 
+                reading.Invoiced = 1;
+
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
                 return new Result()
