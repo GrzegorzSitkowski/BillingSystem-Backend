@@ -46,8 +46,6 @@ namespace BillingSystem.Application.Logic.Invoices
                         CreatedBy = account.Id,
                         CustomerId = customer.Id,
                         CustomerName = customer.FullName,
-                        StatusInvoice = "Test",
-                        StatusPayment = "Not paid",
                         Amount = (reading.Lessons * reading.Price) * customer.PayRate
                     };
 

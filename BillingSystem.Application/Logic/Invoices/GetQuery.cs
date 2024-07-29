@@ -29,8 +29,6 @@ namespace BillingSystem.Application.Logic.Invoices
             public DateTimeOffset CreateDate { get; set; }
             public int CreatedBy { get; set; }
             public DateTimeOffset DueDate { get; set; }
-            public string StatusInvoice { get; set; }
-            public string StatusPayment { get; set; }
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -59,9 +57,7 @@ namespace BillingSystem.Application.Logic.Invoices
                     CustomerName = model.CustomerName,
                     CreateDate = model.CreateDate,
                     CreatedBy = model.CreatedBy,
-                    DueDate = model.DueDate,
-                    StatusInvoice = model.StatusInvoice,
-                    StatusPayment = model.StatusPayment
+                    DueDate = model.DueDate
                 };
             }
         }

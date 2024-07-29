@@ -30,8 +30,6 @@ namespace BillingSystem.Application.Logic.Invoices
                 public int CustomerId { get; set; }
                 public DateTimeOffset CreateDate { get; set; }
                 public DateTimeOffset DueDate { get; set; }
-                public string StatusInvoice { get; set; }
-                public string StatusPayment { get; set; }
             }           
         }
 
@@ -55,8 +53,6 @@ namespace BillingSystem.Application.Logic.Invoices
                         CustomerId = c.CustomerId,
                         CreateDate = c.CreateDate,
                         DueDate = c.DueDate,
-                        StatusInvoice = c.StatusInvoice,
-                        StatusPayment = c.StatusPayment
                     })
                     .ToListAsync();
 

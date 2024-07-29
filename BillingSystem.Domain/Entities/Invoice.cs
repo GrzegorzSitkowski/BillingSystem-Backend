@@ -16,8 +16,6 @@ namespace BillingSystem.Domain.Entities
         public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
         public int CreatedBy { get; set; }
         public DateTimeOffset DueDate { get; set; } = DateTimeOffset.Now.AddDays(14);
-        public string StatusInvoice { get; set; }
-        public string StatusPayment { get; set; }
         public Customer Customer { get; set; } = default!;
     }
 }
