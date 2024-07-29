@@ -30,6 +30,7 @@ namespace BillingSystem.Application.Logic.Customers
             public string Email { get; set; }
             public double PayRate { get; set; }
             public double Balance { get; set; }
+            public ICollection<Invoice> Invoices { get; set; } 
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -59,7 +60,8 @@ namespace BillingSystem.Application.Logic.Customers
                     City = model.City,
                     Email = model.Email,
                     PayRate = model.PayRate,
-                    Balance = model.Balance
+                    Balance = model.Balance,
+                    Invoices = model.Invoices.ToList()
                 };
             }
         }
