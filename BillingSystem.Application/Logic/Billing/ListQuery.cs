@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Invoices
+namespace BillingSystem.Application.Logic.Billing
 {
     public static class ListQuery
     {
@@ -21,15 +21,16 @@ namespace BillingSystem.Application.Logic.Invoices
 
         public class Result
         {
-            public List<Invoice> Invoices { get; set; } = new List<Invoice>();
+            public List<Reading> Readings { get; set; } = new List<Reading>();
 
-            public class Invoice
+            public class Reading
             {
                 public required int Id { get; set; }
-                public double Amount { get; set; }
+                public double Lessons { get; set; }
+                public int Price { get; set; }
+                public string Period { get; set; }
                 public int CustomerId { get; set; }
-                public DateTimeOffset CreateDate { get; set; }
-                public DateTimeOffset DueDate { get; set; }
+                public string CustomerName { get; set; }
             }           
         }
 
@@ -44,21 +45,22 @@ namespace BillingSystem.Application.Logic.Invoices
             {
                 var accout = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var data = await _applicationDbContext.Invoices.Where(c => c.CreatedBy == accout.Id)
+                var data = await _applicationDbContext.Readings.Where(c => c.Invoiced == 0)
                     .OrderByDescending(c => c.CreateDate)
-                    .Select(c => new Result.Invoice()
+                    .Select(c => new Result.Reading()
                     {
                         Id = c.Id,
-                        Amount = c.Amount,
-                        CustomerId = c.CustomerId,
-                        CreateDate = c.CreateDate,
-                        DueDate = c.DueDate,
+                        Lessons = c.Lessons,
+                        Price = c.Price,
+                        Period = c.Period,
+                        CustomerName = c.CustomerName,
+                        CustomerId = c.CustomerId
                     })
                     .ToListAsync();
 
                 return new Result()
                 {
-                    Invoices = data
+                    Readings = data
                 };
             }
         }

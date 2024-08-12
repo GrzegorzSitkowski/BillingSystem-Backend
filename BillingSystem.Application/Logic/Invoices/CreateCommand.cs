@@ -13,13 +13,12 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.Invoices
 {
-    public static class CreateOrUpdateCommand
+    public static class CreateCommand
     {
         public class Request : IRequest<Result>
         {
-            public int? Id { get; set; }
-            public double Amount { get; set; }
-            public int CustomerId { get; set; }
+            //public int? Id { get; set; }
+            public int ReadingId { get; set; }
         }
 
         public class Result
@@ -37,33 +36,31 @@ namespace BillingSystem.Application.Logic.Invoices
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
+                var reading = await _applicationDbContext.Readings.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
 
-                Domain.Entities.Invoice? model = null;
-                if (request.Id.HasValue)
-                {
-                    model = await _applicationDbContext.Invoices.FirstOrDefaultAsync(u => u.Id == request.Id && u.CreatedBy == account.Id);
-                }
-                else
-                {
-                    var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
-                    model = new Domain.Entities.Invoice()
+                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == reading.CustomerId);
+                    
+                var model = new Invoice()
                     {
+                        ReadingId = reading.Id,
                         CreatedBy = account.Id,
+                        CustomerId = customer.Id,
                         CustomerName = customer.FullName,
-                        StatusInvoice = "Test",
-                        StatusPayment = "Not paid"
+                        Amount = (reading.Lessons * reading.Price) * customer.PayRate
                     };
 
-                    _applicationDbContext.Invoices.Add(model);
-                }
+                customer.Balance -= model.Amount;
+
+                _applicationDbContext.Invoices.Add(model);
 
                 if (model == null)
                 {
                     throw new UnauthorizedException();
                 }
 
-                model.Amount = request.Amount;
-                model.CustomerId = request.CustomerId;
+                model.ReadingId = request.ReadingId;
+
+                reading.Invoiced = 1;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
@@ -78,8 +75,7 @@ namespace BillingSystem.Application.Logic.Invoices
         {
             public Validator()
             {
-                RuleFor(x => x.Amount).NotEmpty();
-                RuleFor(x => x.CustomerId).NotEmpty();
+                RuleFor(x => x.ReadingId).NotEmpty();
             }
         }
     }
