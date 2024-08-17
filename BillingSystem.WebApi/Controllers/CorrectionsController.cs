@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using BillingSystem.Application.Logic.Invoices;
+using BillingSystem.Application.Logic.Corrections;
 
 namespace BillingSystem.WebApi.Controllers
 {

@@ -21,8 +21,6 @@ namespace BillingSystem.Application.Logic.Corrections
             public string Reason { get; set; }
             public string Describe { get; set; }
             public int InvoiceId { get; set; }
-            public int CustomerId { get; set; }
-            public int CreatedBy { get; set; }
         }
 
         public class Result

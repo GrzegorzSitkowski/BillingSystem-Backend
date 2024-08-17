@@ -52,6 +52,8 @@ namespace BillingSystem.Application.Logic.Corrections
                 return new Result()
                 {
                     Amount = model.Amount,
+                    Reason = model.Reason,
+                    Describe = model.Describe,
                     InvoiceId = model.InvoiceId,
                     CustomerId = model.CustomerId,
                     CreateDate = model.CreateDate,
