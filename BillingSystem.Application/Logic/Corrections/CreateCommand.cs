@@ -17,7 +17,12 @@ namespace BillingSystem.Application.Logic.Corrections
     {
         public class Request : IRequest<Result>
         {
+            public double Amount { get; set; }
+            public string Reason { get; set; }
+            public string Describe { get; set; }
             public int InvoiceId { get; set; }
+            public int CustomerId { get; set; }
+            public int CreatedBy { get; set; }
         }
 
         public class Result
@@ -35,31 +40,28 @@ namespace BillingSystem.Application.Logic.Corrections
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
-                var invoice = await _applicationDbContext.Invoices.FirstOrDefaultAsync(i => i.Id == request.ReadingId);
+                var invoice = await _applicationDbContext.Invoices.FirstOrDefaultAsync(i => i.Id == request.InvoiceId);
 
-                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == reading.CustomerId);
+                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == invoice.CustomerId);
                     
-                var model = new Invoice()
+                var model = new Correction()
                     {
-                        ReadingId = reading.Id,
-                        CreatedBy = account.Id,
+                        Amount = request.Amount,
+                        Reason = request.Reason,
+                        Describe = request.Describe,
+                        InvoiceId = invoice.Id,
                         CustomerId = customer.Id,
-                        CustomerName = customer.FullName,
-                        Amount = (reading.Lessons * reading.Price) * customer.PayRate
+                        CreatedBy = account.Id
                     };
 
-                customer.Balance -= model.Amount;
+                customer.Balance += model.Amount;
 
-                _applicationDbContext.Invoices.Add(model);
+                _applicationDbContext.Corrections.Add(model);
 
                 if (model == null)
                 {
                     throw new UnauthorizedException();
                 }
-
-                model.ReadingId = request.ReadingId;
-
-                reading.Invoiced = 1;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
@@ -74,7 +76,10 @@ namespace BillingSystem.Application.Logic.Corrections
         {
             public Validator()
             {
-                RuleFor(x => x.ReadingId).NotEmpty();
+                RuleFor(x => x.Amount).NotEmpty();
+                RuleFor(x => x.InvoiceId).NotEmpty();
+                RuleFor(x => x.Reason).NotEmpty().MaximumLength(50);
+                RuleFor(x => x.Describe).NotEmpty().MaximumLength(100);
             }
         }
     }
