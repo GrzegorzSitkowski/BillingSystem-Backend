@@ -22,6 +22,7 @@ namespace BillingSystem.Application.Logic.Invoices
 
         public class Result
         {
+            public int Id { get; set; }
             public double Amount { get; set; }
             public int ReadingId { get; set; }
             public int CustomerId { get; set; }
@@ -51,6 +52,7 @@ namespace BillingSystem.Application.Logic.Invoices
 
                 return new Result()
                 {
+                    Id = model.Id,
                     Amount = model.Amount,
                     ReadingId = model.ReadingId,
                     CustomerId = model.CustomerId,
