@@ -36,11 +36,15 @@ namespace BillingSystem.Application.Logic.Corrections
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
                 var model = await _applicationDbContext.Corrections.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == model.CustomerId);
+
 
                 if(model == null)
                 {
                     throw new UnauthorizedException();
                 }
+
+                customer.Balance -= model.Amount;
 
                 _applicationDbContext.Corrections.Remove(model);
 
