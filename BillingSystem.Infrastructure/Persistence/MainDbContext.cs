@@ -22,6 +22,7 @@ namespace BillingSystem.Infrastructure.Persistence
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Reading> Readings { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Correction> Corrections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)//automatycznie implementuje konfiguracje dla DbSets
         {

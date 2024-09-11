@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BillingSystem.Application.Logic.Invoices
+namespace BillingSystem.Application.Logic.Corrections
 {
     public static class GetQuery
     {
@@ -22,14 +22,13 @@ namespace BillingSystem.Application.Logic.Invoices
 
         public class Result
         {
-            public int Id { get; set; }
             public double Amount { get; set; }
-            public int ReadingId { get; set; }
+            public string Reason { get; set; }
+            public string Describe { get; set; }
+            public int InvoiceId { get; set; }
             public int CustomerId { get; set; }
-            public string CustomerName { get; set; }
             public DateTimeOffset CreateDate { get; set; }
             public int CreatedBy { get; set; }
-            public DateTimeOffset DueDate { get; set; }
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -43,7 +42,7 @@ namespace BillingSystem.Application.Logic.Invoices
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var model = await _applicationDbContext.Invoices.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+                var model = await _applicationDbContext.Corrections.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
 
                 if(model == null)
                 {
@@ -52,14 +51,13 @@ namespace BillingSystem.Application.Logic.Invoices
 
                 return new Result()
                 {
-                    Id = model.Id,
                     Amount = model.Amount,
-                    ReadingId = model.ReadingId,
+                    Reason = model.Reason,
+                    Describe = model.Describe,
+                    InvoiceId = model.InvoiceId,
                     CustomerId = model.CustomerId,
-                    CustomerName = model.CustomerName,
                     CreateDate = model.CreateDate,
-                    CreatedBy = model.CreatedBy,
-                    DueDate = model.DueDate
+                    CreatedBy = model.CreatedBy
                 };
             }
         }
