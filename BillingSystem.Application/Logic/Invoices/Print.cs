@@ -12,22 +12,28 @@ namespace BillingSystem.Application.Logic.Invoices
 {
     public static class Print
     {
-        public class Request
+        public class Request : IRequest<Result>
         {
             public int? Id { get; set; }
         }
 
-        public class Handler : BaseQueryHandler
+        public class Result
+        {
+            public int Id { get; set; }
+        }
+
+        public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
         {
             public Handler(ICurrentAccountProvider currentAccountProvider, IApplicationDbContext applicationDbContext) : base(currentAccountProvider, applicationDbContext)
             {
             }
 
-            public async Task Handle(Request request,  CancellationToken cancellationToken)
+            public async Task<Result> Handle(Request request,  CancellationToken cancellationToken)
             {
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
                 var model = await _applicationDbContext.Invoices.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+                var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == model.CustomerId);
 
                 if(model == null)
                 {
@@ -39,10 +45,24 @@ namespace BillingSystem.Application.Logic.Invoices
                 using (StreamWriter outputFile = new StreamWriter(Path.Combine(path, "invoice.txt"), true))
                 {
                     outputFile.WriteLine($"Number of customer: {model.CustomerId}");
-                    outputFile.WriteLine($"Name: {model.CustomerName}");
-                    outputFile.WriteLine($"Amount: {model.Amount}");
+                    outputFile.WriteLine('\n');
+                    outputFile.WriteLine('\n');
+                    outputFile.WriteLine($"{model.CustomerName}");
+                    outputFile.WriteLine($"{customer.Address}");
+                    outputFile.WriteLine($"{customer.PostCode}");
+                    outputFile.WriteLine($"{customer.City}");
+                    outputFile.WriteLine($"{customer.Email}");
+                    outputFile.WriteLine('\n');
+                    outputFile.WriteLine('\n');
+                    outputFile.WriteLine($"Value of invoice: {model.Amount}");
                     outputFile.WriteLine($"Due date: {model.DueDate}");
+                    outputFile.WriteLine($"Your balance: {customer.Balance}");
                 }
+
+                return new Result()
+                {
+                    Id = model.Id
+                };          
             }
         }
     }
