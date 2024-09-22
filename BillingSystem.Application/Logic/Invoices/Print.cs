@@ -2,11 +2,6 @@
 using BillingSystem.Application.Logic.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.Invoices
 {
@@ -46,17 +41,18 @@ namespace BillingSystem.Application.Logic.Invoices
                 {
                     outputFile.WriteLine($"Number of customer: {model.CustomerId}");
                     outputFile.WriteLine('\n');
-                    outputFile.WriteLine('\n');
                     outputFile.WriteLine($"{model.CustomerName}");
                     outputFile.WriteLine($"{customer.Address}");
                     outputFile.WriteLine($"{customer.PostCode}");
                     outputFile.WriteLine($"{customer.City}");
                     outputFile.WriteLine($"{customer.Email}");
                     outputFile.WriteLine('\n');
-                    outputFile.WriteLine('\n');
-                    outputFile.WriteLine($"Value of invoice: {model.Amount}");
+  
+                    outputFile.WriteLine($"Value of invoice: {model.Amount} zł");
                     outputFile.WriteLine($"Due date: {model.DueDate}");
                     outputFile.WriteLine($"Your balance: {customer.Balance}");
+                    outputFile.WriteLine('\n');
+                    outputFile.WriteLine($"Please pay {model.Amount}zł until {model.DueDate} for our bank account XXX XXXX XXXXXX XXXX XX");
                 }
 
                 return new Result()
