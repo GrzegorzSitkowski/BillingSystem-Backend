@@ -24,6 +24,7 @@ namespace BillingSystem.Application.Logic.Invoices
         {
             public int Id { get; set; }
             public double Amount { get; set; }
+            public string DocumentNumber { get; set; }
             public int ReadingId { get; set; }
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
@@ -54,6 +55,7 @@ namespace BillingSystem.Application.Logic.Invoices
                 {
                     Id = model.Id,
                     Amount = model.Amount,
+                    DocumentNumber = model.DocumentNumber,
                     ReadingId = model.ReadingId,
                     CustomerId = model.CustomerId,
                     CustomerName = model.CustomerName,
