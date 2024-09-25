@@ -27,6 +27,7 @@ namespace BillingSystem.Application.Logic.Corrections
             {
                 public required int Id { get; set; }
                 public double Amount { get; set; }
+                public string DocumentNumber { get; set; }
                 public int InvoiceId { get; set; }
                 public int CustomerId { get; set; }
                 public DateTimeOffset CreateDate { get; set; }
@@ -50,6 +51,7 @@ namespace BillingSystem.Application.Logic.Corrections
                     {
                         Id = c.Id,
                         Amount = c.Amount,
+                        DocumentNumber = c.DocumentNumber,
                         InvoiceId = c.InvoiceId,
                         CustomerId = c.CustomerId,
                         CreateDate = c.CreateDate,

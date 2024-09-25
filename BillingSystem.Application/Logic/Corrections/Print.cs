@@ -49,6 +49,7 @@ namespace BillingSystem.Application.Logic.Corrections
                     outputFile.WriteLine('\n');
   
                     outputFile.WriteLine($"Value of invoice: {model.Amount} zł");
+                    outputFile.WriteLine($"Number of invoice: {model.DocumentNumber}");
                     outputFile.WriteLine($"Reason: {model.Reason}");
                     outputFile.WriteLine($"Describe: {model.Describe}");
                     outputFile.WriteLine($"Your balance: {customer.Balance}");

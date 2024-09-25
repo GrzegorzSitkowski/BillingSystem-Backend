@@ -49,6 +49,7 @@ namespace BillingSystem.Application.Logic.Invoices
                     outputFile.WriteLine('\n');
   
                     outputFile.WriteLine($"Value of invoice: {model.Amount} zł");
+                    outputFile.WriteLine($"Number of invoice: {model.DocumentNumber}");
                     outputFile.WriteLine($"Due date: {model.DueDate}");
                     outputFile.WriteLine($"Your balance: {customer.Balance}");
                     outputFile.WriteLine('\n');

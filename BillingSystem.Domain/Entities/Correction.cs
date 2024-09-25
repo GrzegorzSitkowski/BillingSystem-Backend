@@ -10,6 +10,7 @@ namespace BillingSystem.Domain.Entities
     public class Correction : DomainEntity
     {
         public double Amount { get; set; }
+        public string DocumentNumber { get; set; }
         public string Reason { get; set; }
         public string Describe { get; set; }
         public int InvoiceId { get; set; }

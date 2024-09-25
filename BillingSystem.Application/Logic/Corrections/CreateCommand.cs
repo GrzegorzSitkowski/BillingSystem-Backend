@@ -45,6 +45,7 @@ namespace BillingSystem.Application.Logic.Corrections
                 var model = new Correction()
                     {
                         Amount = request.Amount,
+                        DocumentNumber = $"{invoice.Id}/{customer.Id}/{invoice.CreateDate.Month}/{invoice.CreateDate.Year}",
                         Reason = request.Reason,
                         Describe = request.Describe,
                         InvoiceId = invoice.Id,
