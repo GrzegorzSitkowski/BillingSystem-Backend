@@ -46,7 +46,8 @@ namespace BillingSystem.Application.Logic.Invoices
                         CreatedBy = account.Id,
                         CustomerId = customer.Id,
                         CustomerName = customer.FullName,
-                        Amount = (reading.Lessons * reading.Price) * customer.PayRate
+                        Amount = (reading.Lessons * reading.Price) * customer.PayRate,
+                        DocumentNumber = $"{reading.Id}/{customer.Id}/{reading.CreateDate.Month}/{reading.CreateDate.Year}"
                     };
 
                 customer.Balance -= model.Amount;
