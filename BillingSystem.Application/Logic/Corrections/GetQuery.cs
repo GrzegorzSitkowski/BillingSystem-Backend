@@ -22,7 +22,9 @@ namespace BillingSystem.Application.Logic.Corrections
 
         public class Result
         {
+            public int Id { get; set; }
             public double Amount { get; set; }
+            public string DocumentNumber { get; set; }
             public string Reason { get; set; }
             public string Describe { get; set; }
             public int InvoiceId { get; set; }
@@ -51,7 +53,9 @@ namespace BillingSystem.Application.Logic.Corrections
 
                 return new Result()
                 {
+                    Id = model.Id,
                     Amount = model.Amount,
+                    DocumentNumber = model.DocumentNumber,
                     Reason = model.Reason,
                     Describe = model.Describe,
                     InvoiceId = model.InvoiceId,
