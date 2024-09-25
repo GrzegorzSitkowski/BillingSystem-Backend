@@ -44,5 +44,12 @@ namespace BillingSystem.WebApi.Controllers
             var data = await _mediator.Send(model);
             return Ok(data);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> PrintInvoice([FromQuery] Print.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
+        }
     }
 }
