@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Domain.Entities
 {
-    public class InterestNotes : DomainEntity
+    public class InterestNote : DomainEntity
     {
         public int InvoiceId { get; set; }
         public int CustomerId { get; set; }
