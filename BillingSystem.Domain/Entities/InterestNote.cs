@@ -14,8 +14,8 @@ namespace BillingSystem.Domain.Entities
         public double Amount { get; set; }
         public string DocumentNumber { get; set; }
         public string InvoiceNumber { get; set; }
-        public DateTimeOffset DueDate { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset DueDate { get; set; } = DateTimeOffset.Now.AddDays(14);
+        public DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
         public int CreatedBy { get; set; }
     }
 }
