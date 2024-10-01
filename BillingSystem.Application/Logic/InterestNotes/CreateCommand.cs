@@ -50,6 +50,7 @@ namespace BillingSystem.Application.Logic.InterestNotes
                         CreatedBy = account.Id,
                     };
 
+                Math.Round(model.Amount, 2);
                 customer.Balance -= model.Amount;
 
                 _applicationDbContext.InterestNotes.Add(model);

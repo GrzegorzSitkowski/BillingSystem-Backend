@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using BillingSystem.Application.Logic.Invoices;
+using BillingSystem.Application.Logic.InterestNotes;
 
 namespace BillingSystem.WebApi.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class InterestNoteController : BaseController
+    public class InterestNotesController : BaseController
     {
-        public InterestNoteController(ILogger<InterestNoteController> logger,
+        public InterestNotesController(ILogger<InterestNotesController> logger,
             IMediator mediator) : base(logger, mediator)
         {
 
