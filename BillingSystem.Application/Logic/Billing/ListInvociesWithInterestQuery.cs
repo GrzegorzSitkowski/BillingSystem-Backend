@@ -46,7 +46,7 @@ namespace BillingSystem.Application.Logic.Billing
                 var accout = await _currentAccountProvider.GetAuthenticatedAccount();              
 
                 var data = await _applicationDbContext.Invoices.Where(c => c.Paid == "No".ToUpper().ToLower() 
-                && (c.DueDate.Day - DateTimeOffset.Now.Day) > 14)
+                && (c.DueDate.Day > DateTimeOffset.Now.Day))
                     .OrderByDescending(c => c.CreateDate)
                     .Select(c => new Result.Invoice()
                     {
