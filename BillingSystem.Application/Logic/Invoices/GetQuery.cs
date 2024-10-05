@@ -31,6 +31,7 @@ namespace BillingSystem.Application.Logic.Invoices
             public DateTimeOffset CreateDate { get; set; }
             public int CreatedBy { get; set; }
             public DateTimeOffset DueDate { get; set; }
+            public string Paid { get; set; }
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -61,7 +62,8 @@ namespace BillingSystem.Application.Logic.Invoices
                     CustomerName = model.CustomerName,
                     CreateDate = model.CreateDate,
                     CreatedBy = model.CreatedBy,
-                    DueDate = model.DueDate
+                    DueDate = model.DueDate,
+                    Paid = model.Paid,
                 };
             }
         }

@@ -5,15 +5,17 @@ using BillingSystem.Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
 
-namespace BillingSystem.Application.Logic.Invoices
+namespace BillingSystem.Application.Logic.Billing
 {
-    public static class ListQuery
+    public static class ListInvoiceWithInterest
     {
         public class Request : IRequest<Result>
         {
@@ -27,9 +29,7 @@ namespace BillingSystem.Application.Logic.Invoices
             {
                 public required int Id { get; set; }
                 public double Amount { get; set; }
-                public string DocumentNumber { get; set; }
                 public int CustomerId { get; set; }
-                public DateTimeOffset CreateDate { get; set; }
                 public DateTimeOffset DueDate { get; set; }
                 public string Paid { get; set; }
             }           
@@ -46,19 +46,19 @@ namespace BillingSystem.Application.Logic.Invoices
             {
                 var accout = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var data = await _applicationDbContext.Invoices.Where(c => c.CreatedBy == accout.Id)
-                    .OrderByDescending(c => c.CreateDate)
-                    .Select(c => new Result.Invoice()
-                    {
-                        Id = c.Id,
-                        Amount = c.Amount,
-                        DocumentNumber = c.DocumentNumber,
-                        CustomerId = c.CustomerId,
-                        CreateDate = c.CreateDate,
-                        DueDate = c.DueDate,
-                        Paid = c.Paid,
-                    })
-                    .ToListAsync();
+                var data = await _applicationDbContext.Invoices
+                    .Where(c => c.Paid == "No".ToUpper().ToLower()
+                    && c.DueDate <= DateTimeOffset.Now.AddDays(-14))
+                            .OrderByDescending(c => c.CreateDate)
+                            .Select(c => new Result.Invoice()
+                            {
+                                Id = c.Id,
+                                Amount = c.Amount,
+                                CustomerId = c.CustomerId,
+                                DueDate = c.DueDate,
+                                Paid = c.Paid,
+                            })
+                            .ToListAsync();
 
                 return new Result()
                 {
