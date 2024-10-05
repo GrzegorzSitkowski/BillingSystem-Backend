@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
 
 namespace BillingSystem.Application.Logic.Billing
 {
@@ -43,20 +44,21 @@ namespace BillingSystem.Application.Logic.Billing
 
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
-                var accout = await _currentAccountProvider.GetAuthenticatedAccount();              
+                var accout = await _currentAccountProvider.GetAuthenticatedAccount();
 
-                var data = await _applicationDbContext.Invoices.Where(c => c.Paid == "No".ToUpper().ToLower() 
-                && (c.DueDate.Day > DateTimeOffset.Now.Day))
-                    .OrderByDescending(c => c.CreateDate)
-                    .Select(c => new Result.Invoice()
-                    {
-                        Id = c.Id,
-                        Amount = c.Amount,
-                        CustomerId = c.CustomerId,
-                        DueDate = c.DueDate,
-                        Paid = c.Paid,
-                    })
-                    .ToListAsync();
+                var data = await _applicationDbContext.Invoices
+                    .Where(c => c.Paid == "No".ToUpper().ToLower()
+                    && c.DueDate <= DateTimeOffset.Now.AddDays(-14))
+                            .OrderByDescending(c => c.CreateDate)
+                            .Select(c => new Result.Invoice()
+                            {
+                                Id = c.Id,
+                                Amount = c.Amount,
+                                CustomerId = c.CustomerId,
+                                DueDate = c.DueDate,
+                                Paid = c.Paid,
+                            })
+                            .ToListAsync();
 
                 return new Result()
                 {
