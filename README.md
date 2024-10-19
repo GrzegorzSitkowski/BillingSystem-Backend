@@ -34,9 +34,9 @@ That one is built in Clean Architecture and CQRS pattern.
 
 ## Screenshots
 ### Swagger
-![Swagger](BillingSystem.WebApi/src/Swagger_1.png)
-![Swagger](BillingSystem.WebApi/src/Swagger_2.png)
-![Swagger](BillingSystem.WebApi/src/Swagger_3.png)
+![Swagger](BillingSystem.WebApi/Src/Swagger_1.png)
+![Swagger](BillingSystem.WebApi/Src/Swagger_2.png)
+![Swagger](BillingSystem.WebApi/Src/Swagger_3.png)
 
 
 ## Status
