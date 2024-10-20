@@ -1,5 +1,5 @@
 # Billing system - backend
-> Web application to billing customers in you language school. 
+> Web application to billing customers in your language school. 
 
 ## Table of contents
 * [General info](#general-info)
