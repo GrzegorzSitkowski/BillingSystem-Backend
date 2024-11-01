@@ -9,7 +9,7 @@ namespace BillingSystem.Domain.Entities
 {
     public class Payment : DomainEntity
     {
-        public int CustometId { get; set; }
+        public int CustomerId { get; set; }
         public int DocumentId { get; set; }
         public string DocumentNumber { get; set; }
         public double Amount { get; set; }
