@@ -18,7 +18,7 @@ namespace BillingSystem.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrUpdate([FromBody] CreateOrUpdateCommand.Request model)
+        public async Task<ActionResult> Create([FromBody] CreateCommand.Request model)
         {
             var data = await _mediator.Send(model);
             return Ok(data);

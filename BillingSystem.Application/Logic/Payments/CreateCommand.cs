@@ -13,11 +13,10 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.Payments
 {
-    public static class CreateOrUpdateCommand
+    public static class CreateCommand
     {
         public class Request : IRequest<Result>
         {
-            public int? Id { get; set; }
             public int CustomerId { get; set; }
             public int DocumentId { get; set; }
             public double Amount { get; set; }
