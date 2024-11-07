@@ -5,11 +5,6 @@ using BillingSystem.Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.Payments
 {
@@ -41,7 +36,7 @@ namespace BillingSystem.Application.Logic.Payments
 
                 var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
                     
-                var model = new Payment()
+                var model = new Domain.Entities.Payment()
                     {
                         CustomerId = customer.Id,
                         DocumentId = invoice.Id,
