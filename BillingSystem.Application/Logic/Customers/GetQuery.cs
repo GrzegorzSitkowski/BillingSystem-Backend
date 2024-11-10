@@ -30,7 +30,7 @@ namespace BillingSystem.Application.Logic.Customers
             public string Email { get; set; }
             public double PayRate { get; set; }
             public double Balance { get; set; }
-            //public ICollection<Invoice> Invoices { get; set; } 
+            public List<string> Invoices { get; set; } 
         }
 
         public class Handler : BaseQueryHandler, IRequestHandler<Request, Result>
@@ -45,6 +45,9 @@ namespace BillingSystem.Application.Logic.Customers
                 var account = await _currentAccountProvider.GetAuthenticatedAccount();
 
                 var model = await _applicationDbContext.Customers.FirstOrDefaultAsync(c => c.Id == request.Id && c.CreatedBy == account.Id);
+
+                var invoices = await _applicationDbContext.Invoices.Where(i => i.CustomerId == request.Id).ToListAsync();
+                var invoiceList = invoices.Select(o => o.DocumentNumber).ToList();
 
                 if(model == null)
                 {
@@ -61,8 +64,8 @@ namespace BillingSystem.Application.Logic.Customers
                     Email = model.Email,
                     PayRate = model.PayRate,
                     Balance = model.Balance,
-                   // Invoices = model.Invoices.ToList()
-                };
+                    Invoices = invoiceList
+            };
             }
         }
     }
