@@ -18,6 +18,7 @@ namespace BillingSystem.Application.Interfaces
         DbSet<Invoice> Invoices { get; set; }
         DbSet<Correction> Corrections { get; set; }
         DbSet<InterestNote> InterestNotes { get; set; }
+        DbSet<Payment> Payments { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
