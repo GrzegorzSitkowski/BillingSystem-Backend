@@ -46,7 +46,7 @@ namespace BillingSystem.WebApi
             {
                 if (!builder.Environment.IsDevelopment())
                 {
-                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                    //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 }
             }).AddJsonOptions(options =>
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
