@@ -45,10 +45,10 @@ namespace BillingSystem.WebApi.Controllers
         public async Task<ActionResult> Login([FromBody] LoginCommand.Request model)
         {
             var loginResult = await _mediator.Send(model);
-            //var token = _jwtManager.GenerateUserToken(loginResult.UserId);
-            //SetTokenCookie(token);
-            //return Ok(new JwtToken());// { AccessToken = token });
-            return Ok();
+            var token = _jwtManager.GenerateUserToken(loginResult.UserId);
+            SetTokenCookie(token);
+            return Ok(new JwtToken() { AccessToken = token });
+            //return Ok();
         }
 
         [HttpPost]
