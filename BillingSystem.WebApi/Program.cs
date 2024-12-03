@@ -42,14 +42,14 @@ namespace BillingSystem.WebApi
             builder.Services.AddDatabaseCache();
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
 
-            /*builder.Services.AddControllersWithViews(options =>
+            builder.Services.AddControllersWithViews(options =>
             {
                 if (!builder.Environment.IsDevelopment())
                 {
                     //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 }
             }).AddJsonOptions(options =>
-            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())); */
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())); 
 
             builder.Services.AddJwtAuth(builder.Configuration);
             builder.Services.AddJwtAuthenticationDataProvider(builder.Configuration);
@@ -103,7 +103,7 @@ namespace BillingSystem.WebApi
 
             // Configure the HTTP request pipeline.
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
 
             app.MapControllers();
