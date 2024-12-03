@@ -76,10 +76,10 @@ namespace BillingSystem.WebApi
                 });
             });
 
-            builder.Services.AddAntiforgery(o =>
+            /*builder.Services.AddAntiforgery(o =>
             {
                 o.HeaderName = "X-XSRF-TOKEN";
-            });
+            });*/
 
             builder.Services.AddCors();
 
