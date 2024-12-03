@@ -81,7 +81,7 @@ namespace BillingSystem.WebApi
                 o.HeaderName = "X-XSRF-TOKEN";
             });*/
 
-            builder.Services.AddCors();
+            //builder.Services.AddCors();
 
             var app = builder.Build();
 
@@ -91,13 +91,13 @@ namespace BillingSystem.WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseCors(builder => builder
+            /*app.UseCors(builder => builder
                 .WithOrigins(app.Configuration.GetValue<string>("WebAppBaseUrl") ?? "")
                 .WithOrigins(app.Configuration.GetSection("AdditionalCorsOrigins").Get<string[]>() ?? new string[0])
                 .WithOrigins((Environment.GetEnvironmentVariable("AdditionalCorsOrigins") ?? "").Split(',').Where(h => !string.IsNullOrEmpty(h)).Select(h => h.Trim()).ToArray())
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .AllowAnyMethod());
+                .AllowAnyMethod()); */
 
             app.UseExceptionResultMiddleware();
 
