@@ -41,7 +41,7 @@ namespace BillingSystem.WebApi
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDatabaseCache();
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
-
+            builder.Services.Configure<JwtAuthenticationOptions>(builder.Configuration.GetSection("JwtAuthentication"));
             builder.Services.AddControllersWithViews(options =>
             {
                 if (!builder.Environment.IsDevelopment())
