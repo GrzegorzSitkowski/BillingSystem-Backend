@@ -54,7 +54,7 @@ namespace BillingSystem.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Logout()
         {
-            var logoutResult = await _mediator.Send(new CurrentAccountQuery.Request());
+            var logoutResult = await _mediator.Send(new LogoutCommand.Request());
             DeleteTokenCookie();
             return Ok(logoutResult);
         }
@@ -62,7 +62,7 @@ namespace BillingSystem.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetLoggedInUser()
         {
-            var data = await _mediator.Send(new CurrentAccountQuery.Request() { });
+            var data = await _mediator.Send(new LoggedInUserQuery.Request() { });
             return Ok(data);
         }
 

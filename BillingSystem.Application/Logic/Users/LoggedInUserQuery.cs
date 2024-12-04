@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BillingSystem.Application.Logic.User
 {
-    public static class CurrentAccountQuery
+    public static class LoggedInUserQuery
     {
         public class Request : IRequest<Result>
         {
@@ -29,20 +29,21 @@ namespace BillingSystem.Application.Logic.User
         {
             private readonly IAuthenticationDataProvider _authenticationDataProvider;
 
-            public Handler(ICurrentAccountProvider currentAccountProvider, IApplicationDbContext applicationDbContext,
-                IAuthenticationDataProvider authenticationDataProvider) : base(currentAccountProvider, applicationDbContext)
+            public Handler(ICurrentAccountProvider currentAccountProvider,
+                IApplicationDbContext applicationDbContext,
+                IAuthenticationDataProvider authenticationDataProvider): base(currentAccountProvider, applicationDbContext)
             {
-                _authenticationDataProvider = authenticationDataProvider;
+                _authenticationDataProvider = authenticationDataProvider;  
             }
 
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userId = _authenticationDataProvider.GetUserId();
 
-                if(userId.HasValue)
+                if (userId.HasValue)
                 {
                     var user = await _applicationDbContext.Users.Cacheable().FirstOrDefaultAsync(u => u.Id == userId.Value);
-                    if (user != null)
+                    if(user != null)
                     {
                         return new Result()
                         {
@@ -50,8 +51,7 @@ namespace BillingSystem.Application.Logic.User
                         };
                     }
                 }
-                throw new UnauthorizedException();
-                
+                throw new UnauthorizedAccessException();
             }
         }
 
