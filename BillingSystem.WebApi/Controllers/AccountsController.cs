@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using BillingSystem.Application.Logic.Account;
 using BillingSystem.Application.Logic.User;
 using BillingSystem.Infrastructure.Auth;
 using BillingSystem.WebApi.Application.Auth;
