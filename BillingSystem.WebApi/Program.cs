@@ -91,6 +91,12 @@ namespace BillingSystem.WebApi
                 app.UseSwaggerUI();
             }
 
+            if (app.Environment.IsProduction())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
             app.UseCors(builder => builder
                 .WithOrigins(app.Configuration.GetValue<string>("WebAppBaseUrl") ?? "")
                 .WithOrigins(app.Configuration.GetSection("AdditionalCorsOrigins").Get<string[]>() ?? new string[0])
